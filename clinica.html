@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clínica Gineco-Pediátrica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .fade-in { animation: fadeIn 1s ease-in-out; }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body class="bg-pink-50 text-gray-800">
+  <header class="bg-white shadow p-4 text-center">
+    <h1 class="text-3xl font-bold text-pink-600">Clínica Gineco-Pediátrica</h1>
+    <img src="https://github.com/Per-Arredondo/ejercicio_clinica.v2/blob/main/portada.png?raw=true" alt="Portada" class="mx-auto mt-4 rounded-lg shadow">
+  </header>
+
+  <main class="max-w-4xl mx-auto p-6 space-y-10">
+    <section class="grid gap-6">
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold text-pink-600 mb-2">¿Quiénes somos?</h2>
+        <p>Clínica enfocada en salud ginecológica, obstétrica y pediátrica. Brindamos atención con calidez, ética profesional y trato humano.</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold text-pink-600 mb-2">Misión</h2>
+        <p>Brindar atención médica especializada, accesible y con enfoque integral a mujeres, gestantes e infancias.</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold text-pink-600 mb-2">Visión</h2>
+        <p>Ser un referente en salud femenina e infantil, por nuestra excelencia médica y compromiso con la comunidad.</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h2 class="text-xl font-semibold text-pink-600 mb-2">Valores</h2>
+        <ul class="list-disc pl-6">
+          <li>Ética profesional</li>
+          <li>Empatía</li>
+          <li>Diversidad</li>
+          <li>Honestidad</li>
+          <li>Responsabilidad</li>
+          <li>Enfoque de género y niñez</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold text-pink-600 mb-4">Especialidades</h2>
+      <details class="mb-2"><summary class="cursor-pointer font-semibold">👩‍⚕️ Ginecología</summary><p class="mt-2">Salud reproductiva, anticoncepción, chequeos ginecológicos.</p></details>
+      <details class="mb-2"><summary class="cursor-pointer font-semibold">🧐 Obstetricia</summary><p class="mt-2">Control prenatal, ultrasonidos, atención en embarazo de riesgo.</p></details>
+      <details class="mb-2"><summary class="cursor-pointer font-semibold">👶 Pediatría</summary><p class="mt-2">Control del desarrollo infantil, vacunas y revisiones.</p></details>
+      <details><summary class="cursor-pointer font-semibold">🩺 Medicina General</summary><p class="mt-2">Valoraciones, seguimiento general y canalización.</p></details>
+    </section>
+
+    <section class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold text-pink-600 mb-4">Agendar una cita</h2>
+      <form id="agendaForm" class="space-y-4">
+        <input type="text" name="Nombre completo" placeholder="Nombre completo" class="input" required>
+        <input type="tel" name="Teléfono" placeholder="Teléfono" class="input" required>
+        <input type="email" name="Correo electrónico" placeholder="Correo electrónico" class="input" required>
+        <select name="Sexo" class="input" required>
+          <option value="">Sexo</option>
+          <option value="Femenino">Femenino</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Otro">Otro</option>
+        </select>
+        <select name="Especialidad" class="input" required>
+          <option value="">Especialidad</option>
+          <option value="Ginecología">Ginecología</option>
+          <option value="Obstetricia">Obstetricia</option>
+          <option value="Pediatría">Pediatría</option>
+          <option value="Medicina General">Medicina General</option>
+        </select>
+        <input type="date" name="Fecha" class="input" required>
+        <input type="time" name="Hora" class="input" required>
+        <textarea name="Comentarios adicionales" placeholder="Comentarios adicionales" class="input" rows="3"></textarea>
+        <button type="submit" class="bg-pink-600 text-white px-6 py-2 rounded hover:bg-pink-700">Agendar cita</button>
+      </form>
+      <div id="successMessage" class="hidden mt-4 text-green-600 font-semibold">👍 Gracias, tu cita ha sido agendada. ⏳ Redirigiendo al inicio... 🎉 Te contactaremos pronto.</div>
+    </section>
+  </main>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyKWLrPSDLVh0es8ajMChO3OBKp-xct3xl3XwmmAfICK68qvqf7A9QSwycCD7DRw5Bp/exec';
+
+    document.querySelectorAll('.input').forEach(input => {
+      input.classList.add('border', 'border-gray-300', 'rounded', 'px-3', 'py-2', 'w-full');
+    });
+
+    document.getElementById('agendaForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData
+      })
+      .then(() => {
+        form.reset();
+        const msg = document.getElementById('successMessage');
+        msg.classList.remove('hidden');
+        msg.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => msg.classList.add('hidden'), 5000);
+        setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 1000);
+      })
+      .catch(() => alert('Hubo un error al enviar el formulario.'));
+    });
+  </script>
+</body>
+</html>
